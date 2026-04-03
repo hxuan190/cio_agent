@@ -49,6 +49,17 @@ When invoked:
 - **N+1 queries**: Database queries in loops
 - **Unnecessary allocations**: Objects in hot paths
 
+### EXTREME -- HFT & Zero-Allocation (Hot Paths Only)
+- **Arenas & sync.Pool**: Pre-allocate slices/structs. Reset state before returning to pool to achieve zero-allocation.
+- **Sharded Maps**: Partition concurrent maps to avert contention. Never use global `sync.RWMutex` on heavily accessed dictionaries.
+- **Atomic COW (Copy-On-Write)**: Use `atomic.Pointer` for read-heavy configs/snapshots for lock-free read access.
+- **CPU Pinning**: Pin latency-critical goroutines using `runtime.LockOSThread()`.
+- **False Sharing Prevention**: Insert `_ cpu.CacheLinePad` between heavily updated atomics.
+- **Zero-Copy Conversions**: Convert `[]byte` to `string` using `unsafe.String(unsafe.SliceData(b), len(b))` instead of allocating.
+- **Bounds Check Elimination (BCE)**: Insert early bounds checks (`_ = arr[length-1]`) in massive loops to skip compiler array validations.
+- **Lock-Free Channels**: Avoid standard Go Channels inside sub-microsecond MPMC hot loops; use CAS lock-free ring buffers.
+- **GC Tuning Constraints**: Expect/Review aggressive GC configs (high `GOGC` + hard `GOMEMLIMIT`) in startup logic.
+
 ### MEDIUM -- Best Practices
 - **Context first**: `ctx context.Context` should be first parameter
 - **Table-driven tests**: Tests should use table-driven pattern
