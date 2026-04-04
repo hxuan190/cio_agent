@@ -23,6 +23,8 @@ Hệ thống này được phân nhánh (fork) về và cắt bỏ toàn bộ 95
 
 ## 🛠 Hướng dẫn Cài Đặt (Installation) trong 3 bước
 
+> **🔥 DÀNH CHO NGƯỜI MỚI:** Vui lòng xem ngay bản [Hướng Dẫn Chi Tiết Cách Sử Dụng Kèm Ví Dụ Thực Tế (CLAUDE_CODE_GUIDE_VI.md)](./CLAUDE_CODE_GUIDE_VI.md) để dễ dàng thao tác với Claude Code.
+
 **1. Định vị Trái Tim Hệ Thống (Plugin Root):**
 Để toàn bộ các kịch bản Hook đằng sau làm việc chính xác, hãy thêm biến môi trường trỏ thẳng vào thư mục `core` của repo này trong file `~/.bashrc` hoặc `~/.zshrc`:
 ```bash
